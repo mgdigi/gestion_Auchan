@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  php-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: php_web_app
+    volumes:
+      - ./src:/app
+    ports:
+      - "8080:80"
+    networks:
+      - central_net
+
+  php-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile.cli
+    container_name: php_cli_app
+    volumes:
+      - ./src:/app
+    working_dir: /app
+    environment:
+      - DB_HOST=postgres_db
+      - DB_NAME=ges_auchan
+      - DB_USER=mgdigi
+      - DB_PASS=Prophete10
+      - DB_PORT=5432
+    networks:
+      - central_net
+    tty: true
+    stdin_open: true
+
+
+   
+
+networks:
+  central_net:
+    external: true
