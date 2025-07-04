@@ -3,6 +3,6 @@
 namespace App\Entity;
 
 enum TypePerson : string {
-    case Vendeur = "Vendeur";
-    case Client = "Client";
+    case VENDEUR = "Vendeur";
+    case CLIENT = "Client";
 }

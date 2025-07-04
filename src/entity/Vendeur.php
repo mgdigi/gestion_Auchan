@@ -10,11 +10,12 @@ class Vendeur extends Person{
 
     private array|null $commandes;
 
-    public function __construct($id, $nom, $typePerson, $login, $password, $matricule){
-        parent::__construct($id, $nom, $typePerson = 'VENDEUR');
-        $this->login = $login;
-        $this->password = $password;
-        $this->matricule = $matricule;
+    public function __construct($id = 0,$nom = '', $typePerson = TypePerson::VENDEUR,  $login = '', $password = '', $matricule = ''){
+        parent::__construct($id = 0, $nom = '' , $typePerson = 'VENDEUR');
+        $this->login = $login ?? '';
+        $this->password = $password ?? ''; 
+        $this->matricule = $matricule ?? '';
+        $this->commandes = [];
     }
 
     /**
@@ -89,15 +90,22 @@ class Vendeur extends Person{
         $this->commandes[] = $commande;
     }
 
-    public function toObject (array $vendeur):static{
-        return new Vendeur(
-            $vendeur['id'],
-            $vendeur['nom'],
-            $vendeur['typePerson'],
-            $vendeur['login'],
-            $vendeur['password'],
-            $vendeur['matricule']
+    public static function toObject (array $data):static{
+        $vendeur  = new static(
+            $data['id'],
+            $data['nom'],
+            $data['typeperson'],
+            $data['login'],
+            $data['password'],
+            $data['matricule']
         );
+        // $commandes = array_map(fn($commande) => Commande::toObject($commande), $data['commandes']);
+
+        // foreach ($commandes as $commande) {
+        //     $vendeur->addCommande($commande);
+        // }
+        
+        return $vendeur;
         
     }   
 

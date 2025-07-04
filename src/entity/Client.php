@@ -8,8 +8,8 @@ class Client  extends Person{
 
     private array|null $commandes;
 
-    public function  __construct($id= null, $nom = null, $typePerson = 'CLIENT', $telephone= null){
-        parent::__construct($id, $nom, $typePerson = 'CLIENT',);;
+    public function  __construct($id= 0, $nom = '', $typePerson = TypePerson::CLIENT, $telephone= ''){
+        parent::__construct($id, $nom, $typePerson = TypePerson::CLIENT);;
         $this->telephone = $telephone;
         $this->commandes = [];
     }
@@ -47,13 +47,20 @@ class Client  extends Person{
         $this->commandes[] = $commande;
     }
 
-    public function toObject(array $data):static{
-        return new Client(
+    public static function toObject(array $data):static{
+        $client =  new static(
          $data['id'],
          $data['nom'],
          $data['typePerson'],
          $data['telephone'],
         );
+        $commandes = array_map(fn($commande) => Commande::toObject($commande), $data['commandes']);
+
+        foreach ($commandes as $commande) {
+            $client->addCommande($commande);
+        }
+        
+        return $client;
         
     }
 

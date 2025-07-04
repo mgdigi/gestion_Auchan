@@ -7,13 +7,13 @@ class Person extends AbstractEntity{
     
     protected int $id;
     protected string $nom;
-    protected TypePerson $typePerson;
+    protected  $typePerson;
 
 
     public function __construct($id, $nom, $typePerson){
         $this->id = $id;
         $this->nom = $nom;
-        $this->profil = $typePerson;
+        $this->typePerson = $typePerson;
     }
 
 
@@ -78,16 +78,16 @@ class Person extends AbstractEntity{
         return $this;
     }
 
-    public function toObject(array $data):static{
-        return new Person(
+    public static function toObject(array $data):static{
+        return new static(
             $data['id'],
             $data['nom'],
             $data['typePerson']
         );
     }
 
-    public function toArray(){
-        return [
+    public  function toArray(){
+        return  [
             'id' => $this->id,
             'nom' => $this->nom,
             'typePerson' => $this->typePerson

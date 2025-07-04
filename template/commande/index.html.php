@@ -1,4 +1,3 @@
-        
         <div class="max-w-7xl mx-auto">
             <h1 class="text-2xl font-bold mb-6">Liste des commandes</h1>
             
@@ -62,9 +61,10 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-700">
+                        <?php foreach ($commandes as $commande) : ?>
                         <tr class="hover:bg-gray-750 transition-colors">
-                            <td class="py-4 px-6 text-white">#COM_001</td>
-                            <td class="py-4 px-6 text-white">BAKARY DIASSY</td>
+                            <td class="py-4 px-6 text-white"><?php echo htmlspecialchars($commande->getDate()) ?></td>
+                            <td class="py-4 px-6 text-white"><?php echo htmlspecialchars($commande->getClient()->getId()) ?></td>
                             <td class="py-4 px-6">
                                 <span class="px-3 py-1 bg-red-900 text-red-200 rounded-full text-sm">Impayé</span>
                             </td>
@@ -99,6 +99,7 @@
                                 </button>
                             </td>
                         </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

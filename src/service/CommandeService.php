@@ -17,16 +17,13 @@ class CommandeService{
   private CommandeRepository $commandeRepository;
 
   public function __construct(){
-    $this->commandeRepository::getInstance();
+    $this->commandeRepository =  CommandeRepository::getInstance();
   }
 
-  public function getAll(){
+  public function getAll():array{
     return $this->commandeRepository->getAll();
   }
 
-  public function create($commande){
-    return $this->commandeRepository->create($commande);
-  }
 
 
 }

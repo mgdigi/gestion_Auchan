@@ -7,16 +7,17 @@ use \PDOException;
 
 class Database{
     private $connection;
-    private $instance = null;
+    private  static $instance = null;
 
       private function __construct() {
         $host = "postgres_db";
         $dbname = "gestion_auchan";
         $user = "mgdigi";
         $password = "Prophete10";
+        $port = "5432";
 
         try {
-            $infoDB = "pgsql:host=$host;dbname=$dbname;";
+            $infoDB = "pgsql:host=$host;port=$port;dbname=$dbname;";
             $this->connection = new PDO(
               $infoDB,
               $user,
@@ -28,7 +29,6 @@ class Database{
               ]
               );
 
-              echo  "Connexion à la base de données réussie !";
              
         }catch(PDOException $e){
             die("Erreur de connexion à la base de données : " . $e->getMessage());

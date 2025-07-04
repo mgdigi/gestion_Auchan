@@ -14,7 +14,7 @@ class Facture extends AbstractEntity{
     private array $paiements;
 
 
-    private function __construct($id, $date, $montant, $montantRest, $status){
+    private function __construct($id = 0, $date = '', $montant = 0, $montantRest = 0, $status = StatusFacture::NonPaye){
         $this->id = $id;
         $this->date = $date;
         $this->montant = $montant;

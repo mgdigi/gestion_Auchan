@@ -7,7 +7,7 @@ use App\Entity\Commande;
 class CommandeRepository
 {
     private $table = "commande";
-    private $db;
+    private Database $db;
     private static CommandeRepository|null $instance = null;
 
     public static function getInstance()
@@ -36,31 +36,6 @@ class CommandeRepository
             $commandes[] = $commande->toObject($row);
         }
         return $commandes;
-    }
-
-    public function create($commande)
-    {
-        $query = "INSERT INTO $this->table (date, facture_id, client_id, vendeur_id) 
-                  VALUES (:date, :facture_id, :client_id, :vendeur_id)";
-        
-        $stmt = $this->db->getConnection()->prepare($query);
-        
-        $params = [
-            'date' => $commande->getDate(),
-            'facture_id' => $commande->getFacture()?->getId(),
-            'client_id' => $commande->getClient()->getId(),
-            'vendeur_id' => $commande->getVendeur()->getId()
-        ];
-        
-        $result = $stmt->execute($params);
-        
-        if ($result) {
-            $lastId = $this->db->getConnection()->lastInsertId();
-            $commande->setId($lastId);
-            return $lastId;
-        }
-        
-        return false;
     }
 
     

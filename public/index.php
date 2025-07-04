@@ -6,7 +6,7 @@ use App\Core\Router;
 
 require_once "../Route/route.web.php";
 
-Router::resolve($routes);
+Router::resolve(uris: $routes);
 
 
 
