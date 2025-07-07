@@ -4,6 +4,7 @@ namespace App\Repository;
 use App\Core\AbstractRepository;
 use App\Core\Database;
 use App\Entity\Vendeur;
+use App\Entity\Client;
 
 class PersonRepository extends AbstractRepository{
     private $table = "person";
@@ -22,7 +23,7 @@ class PersonRepository extends AbstractRepository{
     public function selectById(){}
     public function selectBy(array $filter){}
 
-    public function selectByLoginAndPassword(string $login, string $passwors): null|Vendeur{
+    public function selectByLoginAndPassword(string $login, string $passwors): null|Vendeur|CLIENT{
         $query = "SELECT * FROM $this->table WHERE login = :login AND password = :password";
         $stmt = $this->db->getConnection()->prepare($query);
         $stmt->execute([
@@ -32,7 +33,11 @@ class PersonRepository extends AbstractRepository{
         
         $result = $stmt->fetch();
         if($result){
-            return Vendeur::toObject($result);
+            if($result['typeperson'] == 'CLIENT'){
+                return Client::toObject($result);
+            }else{
+                return Vendeur::toObject($result);
+            }
         }
         return null;
         

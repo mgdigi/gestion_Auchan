@@ -1,4 +1,5 @@
-        <div class="max-w-7xl mx-auto">
+<?php var_dump($_SESSION['user']); ?>
+      <div class="max-w-7xl mx-auto">
             <h1 class="text-2xl font-bold mb-6">Liste des commandes</h1>
             
             <div class="flex justify-center gap-4 mb-6">
@@ -55,7 +56,8 @@
                     <thead class="bg-gray-700 border-b border-gray-600">
                         <tr>
                             <th class="text-left py-4 px-6 font-medium text-gray-300">Numéro Commande</th>
-                            <th class="text-left py-4 px-6 font-medium text-gray-300">Client</th>
+                            <th class="text-left py-4 px-6 font-medium text-gray-300">Date Commande</th>
+                            <th class="text-left py-4 px-6 font-medium text-gray-300"><?= $_SESSION['user']['typePerson'] == 'CLIENT'  ? 'Vendeur' :  'Client'  ?></th>
                             <th class="text-left py-4 px-6 font-medium text-gray-300">Statut</th>
                             <th class="text-left py-4 px-6 font-medium text-gray-300">Facture</th>
                         </tr>
@@ -63,10 +65,19 @@
                     <tbody class="divide-y divide-gray-700">
                         <?php foreach ($commandes as $commande) : ?>
                         <tr class="hover:bg-gray-750 transition-colors">
+                            <td class="py-4 px-6 text-white"><?php echo htmlspecialchars($commande->getNumeroCommande()) ?></td>
                             <td class="py-4 px-6 text-white"><?php echo htmlspecialchars($commande->getDate()) ?></td>
-                            <td class="py-4 px-6 text-white"><?php echo htmlspecialchars($commande->getClient()->getId()) ?></td>
+                            <td class="py-4 px-6 text-white"> <?=  $this->get('user', 'typePerson') == 'VENDEUR' ? htmlspecialchars($commande->getClient()->getNom()) : htmlspecialchars($commande->getVendeur()->getNom()) ?></td>
                             <td class="py-4 px-6">
-                                <span class="px-3 py-1 bg-red-900 text-red-200 rounded-full text-sm">Impayé</span>
+                                <?php if ($commande->getFacture() !== null): ?>
+                                    <span class="px-3 py-1 bg-red-900 text-red-200 rounded-full text-sm">
+                                        <?= htmlspecialchars($commande->getFacture()->getStatus()) ?>
+                                    </span>
+                                <?php else: ?>
+                                    <span class="px-3 py-1 bg-yellow-900 text-yellow-200 rounded-full text-sm">
+                                        Non facturée
+                                    </span>
+                                <?php endif; ?>
                             </td>
                             <td class="py-4 px-6">
                                 
@@ -75,30 +86,7 @@
                                 </button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-750 transition-colors">
-                            <td class="py-4 px-6 text-white">#COM_002</td>
-                            <td class="py-4 px-6 text-white">ANONYME</td>
-                            <td class="py-4 px-6">
-                                <span class="px-3 py-1 bg-red-900 text-red-200 rounded-full text-sm">Impayé</span>
-                            </td>
-                            <td class="py-4 px-6">
-                                <button class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
-                                    voir
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-750 transition-colors">
-                            <td class="py-4 px-6 text-white">#COM_003</td>
-                            <td class="py-4 px-6 text-white">AU DIOP</td>
-                            <td class="py-4 px-6">
-                                <span class="px-3 py-1 bg-red-900 text-red-200 rounded-full text-sm">Impayé</span>
-                            </td>
-                            <td class="py-4 px-6">
-                                <button class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
-                                    voir
-                                </button>
-                            </td>
-                        </tr>
+                        
                         <?php endforeach; ?>
                     </tbody>
                 </table>

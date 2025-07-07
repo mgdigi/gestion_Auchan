@@ -21,7 +21,15 @@ class CommandeService{
   }
 
   public function getAll():array{
-    return $this->commandeRepository->getAll();
+    return $this->commandeRepository->selectAll();
+  }
+
+  public  function getByVendeur( $vendeur_id){
+    return $this->commandeRepository->selectByVendeur($vendeur_id);
+  }
+
+  public function getByClient( $client_id){
+    return $this->commandeRepository->selectByClient($client_id);
   }
 
 

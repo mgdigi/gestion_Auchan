@@ -2,11 +2,14 @@
 
 
 require_once "../vendor/autoload.php";
+require_once "../config/bootstrap.php";
 use App\Core\Router;
 
-require_once "../Route/route.web.php";
 
 Router::resolve(uris: $routes);
+
+
+
 
 
 

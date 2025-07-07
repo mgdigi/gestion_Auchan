@@ -1,4 +1,4 @@
-    <div class="glass-effect rounded-3xl shadow-2xl p-8 w-full max-w-md hover-lift animate-fadeIn">
+  <div class="glass-effect rounded-3xl shadow-2xl p-8 w-full max-w-md hover-lift animate-fadeIn">
         <div class="text-center mb-8">
             <h1 class="text-4xl font-light text-gray-800 mb-2">Connexion</h1>
             <p class="text-gray-600 text-lg">Accédez à votre compte</p>
@@ -16,8 +16,10 @@
                     placeholder="votre@email.com"
                     class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white transition-all duration-300 text-gray-800 placeholder-gray-400"
                 >
-                <?php if(!empty($errors['email'])): ?>
-                   <p class="text-sm color-red-500 text-black"><?= $errors['email']; ?> <p>
+                <?php if(!empty($_SESSION['errors']['email'])): ?>
+                  <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                   <p class="text-sm text-white "><?= $_SESSION['errors']['email']; ?> <p>
+                 </div>
                 <?php endif; ?>
             </div>
 
@@ -32,8 +34,10 @@
                     placeholder="••••••••"
                     class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white transition-all duration-300 text-gray-800 placeholder-gray-400"
                 >
-                <?php if(empty($errors['password'])): ?>
-                   <p><?=  $errors['email']; ?><p>
+                <?php if(!empty($_SESSION['errors']['password'])): ?>
+                  <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                   <p class="text-sm text-white "><?=  $_SESSION['errors']['password'] ?> <p>
+                 </div>
                 <?php endif; ?>
             </div>
 

@@ -7,17 +7,23 @@ class Commande extends AbstractEntity
 {
     private int $id;
     private string $date;
+    private string $numeroCommande;
     private Facture|null $facture = null;
     private Client $client;
     private Vendeur $vendeur;
     private array $commandesProduits;
 
-    public function __construct($id = 0, $date = '')
+    public function __construct($id = 0, $date = '',  $numeroCommande = '')
     {
         $this->id = $id ?? 0;
         $this->date = $date ?? '';
+        $this->numeroCommande = $numeroCommande;
         $this->commandesProduits = [];
         
+    }
+
+    public function genererNumeroCommande(){
+        $this->numeroCommande = "CMD" .rand(100, 400) . date('YmdHis');
     }
 
     /**
@@ -53,6 +59,26 @@ class Commande extends AbstractEntity
     public function setDate($date)
     {
         $this->date = $date;
+        return $this;
+    }
+
+    /**
+     * Get the value of numeroCommande
+     */ 
+    public function getNumeroCommande()
+    {
+        return $this->numeroCommande;
+    }
+
+    /**
+     * Set the value of numeroCommande
+     *
+     * @return  self
+     */ 
+    public function setNumeroCommande($numeroCommande)
+    {
+        $this->numeroCommande = $numeroCommande;
+
         return $this;
     }
 
@@ -128,7 +154,7 @@ class Commande extends AbstractEntity
 
     public static function toObject(array $data): static
     {
-        $commande = new static($data['id'], $data['date']);
+        $commande = new static($data['id'], $data['date'], $data['numero_commande']);
         
         if (isset($data['client_id'])) {
             $client = new Client();
@@ -162,6 +188,7 @@ class Commande extends AbstractEntity
         return [
             'id' => $this->id,
             'date' => $this->date,
+            'numero_commande' => $this->numeroCommande,
             'facture' => $this->facture?->toArray(),
             'client' => isset($this->client) ? $this->client->toArray() : null,
             'vendeur' => isset($this->vendeur) ? $this->vendeur->toArray() : null,
@@ -169,4 +196,6 @@ class Commande extends AbstractEntity
         ];
     }
 
+
+    
 }

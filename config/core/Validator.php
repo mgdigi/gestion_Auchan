@@ -28,6 +28,13 @@ namespace App\Core;
     }
    }
 
+   public static function minLength($key, $value, $minLength, $message = "La longueur minimale est de 3 caractères"){
+    if(strlen($value) < $minLength){
+        self::addError($key, $message);
+    }
+   }
+
+
    public static function addError(string $field, string $message) {
       self::$errors[$field] = $message;
     }

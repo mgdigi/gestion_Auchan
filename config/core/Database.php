@@ -6,15 +6,16 @@ use \PDO;
 use \PDOException;
 
 class Database{
+    
     private $connection;
     private  static $instance = null;
 
       private function __construct() {
-        $host = "postgres_db";
-        $dbname = "gestion_auchan";
-        $user = "mgdigi";
-        $password = "Prophete10";
-        $port = "5432";
+        $host = $_ENV['DB_HOST'];
+        $dbname = $_ENV['DB_NAME'];
+        $user = $_ENV['DB_USER'];
+        $password = $_ENV['DB_PASSWORD'];
+        $port = $_ENV['DB_PORT'];
 
         try {
             $infoDB = "pgsql:host=$host;port=$port;dbname=$dbname;";

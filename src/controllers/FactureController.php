@@ -21,15 +21,9 @@ class FactureController extends AbstractController{
     public function edit(){
     }
 
-    public function destroy(){}
+    // public function destroy(){}
 
-    public function render(string $views, array $data = []){
-        extract($data);
-        ob_start();
-        require_once '../template/'.$views;
-        $contentForLayout = ob_get_clean();
-        require_once '../template/layout/base.layout.php';
-    }
+    
 
 
 
