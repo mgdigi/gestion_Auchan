@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+require_once "../config/middlewares.php";
 
 use App\Core\Error404Controller;
 
@@ -13,7 +14,7 @@ class Router{
         }
         
         $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
-        $currentUri = trim($requestUri, ''); 
+        $currentUri = trim($requestUri, '');
         
         if (isset($uris[$currentUri])) {
             $route = $uris[$currentUri];
@@ -21,20 +22,7 @@ class Router{
             $method = $route['method'];
             $middlewares = $route['middlewares'] ?? null;
 
-            $verifs = [
-                'isLoggedIn' => isLoggedIn(),
-                'isVendeur' => isVendeur(),
-                'isClient' => isClient(),
-            ];
-
-            if ($middlewares) {
-                foreach ($middlewares as $middleware) {
-                    if (!isset($verifs[$middleware]) || !$verifs[$middleware]) {
-                        header("Location: /");
-                        exit;
-                    }
-                }
-            }
+            runMiddleware($middlewares);
 
             $controller = new $controllerClass();
             $controller->$method();

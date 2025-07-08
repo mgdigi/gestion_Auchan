@@ -1,10 +1,5 @@
 <?php
 
-use Dotenv\Dotenv;
-
-
 require_once "../config/middlewares.php";
-require_once "../Route/route.web.php";
+require_once "../config/env.php";
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();

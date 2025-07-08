@@ -14,7 +14,6 @@ class Session {
         return self::$instance;
     }
 
-    
     public static function set(string $key, $value) {
         $_SESSION[$key] = $value;
     }

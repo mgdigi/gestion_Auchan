@@ -3,10 +3,13 @@
 namespace App\Service;
 
 use App\Repository\CommandeRepository;
+use App\Core\App;
 
-class CommandeService{
+class CommandeService {
 
     private static CommandeService|null $instance = null;
+
+    
 
     public static function getInstance(){
         if(self::$instance === null){
@@ -17,7 +20,7 @@ class CommandeService{
   private CommandeRepository $commandeRepository;
 
   public function __construct(){
-    $this->commandeRepository =  CommandeRepository::getInstance();
+     $this->commandeRepository = App::getDependency(CommandeRepository::class);
   }
 
   public function getAll():array{

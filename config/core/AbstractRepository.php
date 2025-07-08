@@ -1,7 +1,15 @@
 <?php
 namespace App\Core;
 
-abstract class AbstractRepository{
+use \PDO;
+
+abstract class AbstractRepository extends Database{
+
+    protected PDO $pdo;
+
+    public function __construct(){
+        $this->pdo = parent::getInstance()->getConnection();
+    }
 
     abstract public function selectAll();
     abstract public function insert();

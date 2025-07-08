@@ -8,10 +8,20 @@ use App\Entity\Client;
 
 class PersonRepository extends AbstractRepository{
     private $table = "person";
-    private $db;
 
-    public function __construct(){
-        $this->db = Database::getInstance();
+    private static  PersonRepository|null $instance = null;
+
+   
+
+    public static function getInstance():PersonRepository{
+        if(self::$instance === null){
+            self::$instance = new PersonRepository();
+        }
+        return self::$instance;
+    }
+
+    public  function __construct() {
+        parent::__construct();
     }
 
     public function selectAll(){}
@@ -25,7 +35,7 @@ class PersonRepository extends AbstractRepository{
 
     public function selectByLoginAndPassword(string $login, string $passwors): null|Vendeur|CLIENT{
         $query = "SELECT * FROM $this->table WHERE login = :login AND password = :password";
-        $stmt = $this->db->getConnection()->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute([
             'login' => $login,
             'password' => $passwors
@@ -48,7 +58,7 @@ class PersonRepository extends AbstractRepository{
 
     public function getClients(){
         $query = "SELECT * FROM $this->table where typePerson = 'CLIENT'";
-        $stmt = $this->db->getConnection()->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;

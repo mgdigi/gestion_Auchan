@@ -11,18 +11,14 @@ class Database{
     private  static $instance = null;
 
       private function __construct() {
-        $host = $_ENV['DB_HOST'];
-        $dbname = $_ENV['DB_NAME'];
-        $user = $_ENV['DB_USER'];
-        $password = $_ENV['DB_PASSWORD'];
-        $port = $_ENV['DB_PORT'];
+        
 
         try {
-            $infoDB = "pgsql:host=$host;port=$port;dbname=$dbname;";
+           
             $this->connection = new PDO(
-              $infoDB,
-              $user,
-              $password,
+              dsn,
+              DB_USER,
+              DB_PASSWORD,
               [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
